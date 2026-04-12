@@ -207,9 +207,9 @@ function CompareCard({ teamEvent: te }: { teamEvent: StatboticsTeamEvent }) {
       <div className="grid grid-cols-2 gap-1.5 sm:gap-2 text-xs">
         <div><span className="text-[var(--color-text-muted)]">EPA:</span> <span className="text-yellow-400 font-bold">{te.epa.total_points.mean.toFixed(1)}</span></div>
         <div><span className="text-[var(--color-text-muted)]">Win%:</span> <span className="text-white font-bold">{(te.record.total.winrate * 100).toFixed(0)}%</span></div>
-        <div><span className="text-[var(--color-text-muted)]">Auto:</span> <span className="text-green-400">{te.epa.breakdown?.auto_points?.mean?.toFixed(1) ?? '—'}</span></div>
-        <div><span className="text-[var(--color-text-muted)]">Teleop:</span> <span className="text-purple-400">{te.epa.breakdown?.teleop_points?.mean?.toFixed(1) ?? '—'}</span></div>
-        <div><span className="text-[var(--color-text-muted)]">Endgame:</span> <span className="text-orange-400">{te.epa.breakdown?.endgame_points?.mean?.toFixed(1) ?? '—'}</span></div>
+        <div><span className="text-[var(--color-text-muted)]">Auto:</span> <span className="text-green-400">{te.epa.breakdown?.auto_points?.toFixed(1) ?? '—'}</span></div>
+        <div><span className="text-[var(--color-text-muted)]">Teleop:</span> <span className="text-purple-400">{te.epa.breakdown?.teleop_points?.toFixed(1) ?? '—'}</span></div>
+        <div><span className="text-[var(--color-text-muted)]">Endgame:</span> <span className="text-orange-400">{te.epa.breakdown?.endgame_points?.toFixed(1) ?? '—'}</span></div>
         <div><span className="text-[var(--color-text-muted)]">Record:</span> <span className="text-white">{te.record.total.wins}-{te.record.total.losses}-{te.record.total.ties}</span></div>
       </div>
     </div>

@@ -32,9 +32,9 @@ export function TeamTable({ teamEvents, selectedTeams, onToggleTeam }: TeamTable
         case 'team': av = a.team; bv = b.team; break;
         case 'epa': av = a.epa.total_points.mean; bv = b.epa.total_points.mean; break;
         case 'winrate': av = a.record.total.winrate; bv = b.record.total.winrate; break;
-        case 'auto': av = a.epa.breakdown?.auto_points?.mean ?? 0; bv = b.epa.breakdown?.auto_points?.mean ?? 0; break;
-        case 'teleop': av = a.epa.breakdown?.teleop_points?.mean ?? 0; bv = b.epa.breakdown?.teleop_points?.mean ?? 0; break;
-        case 'endgame': av = a.epa.breakdown?.endgame_points?.mean ?? 0; bv = b.epa.breakdown?.endgame_points?.mean ?? 0; break;
+        case 'auto': av = a.epa.breakdown?.auto_points ?? 0; bv = b.epa.breakdown?.auto_points ?? 0; break;
+        case 'teleop': av = a.epa.breakdown?.teleop_points ?? 0; bv = b.epa.breakdown?.teleop_points ?? 0; break;
+        case 'endgame': av = a.epa.breakdown?.endgame_points ?? 0; bv = b.epa.breakdown?.endgame_points ?? 0; break;
         default: av = 0; bv = 0;
       }
       return sortAsc ? av - bv : bv - av;
@@ -129,15 +129,15 @@ export function TeamTable({ teamEvents, selectedTeams, onToggleTeam }: TeamTable
                 </div>
                 <div>
                   <span className="text-[var(--color-text-muted)]">Auto </span>
-                  <span className="text-green-400 font-mono">{te.epa.breakdown?.auto_points?.mean?.toFixed(1) ?? '—'}</span>
+                  <span className="text-green-400 font-mono">{te.epa.breakdown?.auto_points?.toFixed(1) ?? '—'}</span>
                 </div>
                 <div>
                   <span className="text-[var(--color-text-muted)]">Tele </span>
-                  <span className="text-purple-400 font-mono">{te.epa.breakdown?.teleop_points?.mean?.toFixed(1) ?? '—'}</span>
+                  <span className="text-purple-400 font-mono">{te.epa.breakdown?.teleop_points?.toFixed(1) ?? '—'}</span>
                 </div>
                 <div>
                   <span className="text-[var(--color-text-muted)]">End </span>
-                  <span className="text-orange-400 font-mono">{te.epa.breakdown?.endgame_points?.mean?.toFixed(1) ?? '—'}</span>
+                  <span className="text-orange-400 font-mono">{te.epa.breakdown?.endgame_points?.toFixed(1) ?? '—'}</span>
                 </div>
               </div>
             </div>
@@ -182,9 +182,9 @@ export function TeamTable({ teamEvents, selectedTeams, onToggleTeam }: TeamTable
                   <td className="px-2 sm:px-3 py-2 text-[var(--color-text-muted)] hidden lg:table-cell">
                     {te.record.total.wins}-{te.record.total.losses}-{te.record.total.ties}
                   </td>
-                  <td className="px-2 sm:px-3 py-2 font-mono text-green-400 hidden md:table-cell">{te.epa.breakdown?.auto_points?.mean?.toFixed(1) ?? '—'}</td>
-                  <td className="px-2 sm:px-3 py-2 font-mono text-purple-400 hidden md:table-cell">{te.epa.breakdown?.teleop_points?.mean?.toFixed(1) ?? '—'}</td>
-                  <td className="px-2 sm:px-3 py-2 font-mono text-orange-400 hidden md:table-cell">{te.epa.breakdown?.endgame_points?.mean?.toFixed(1) ?? '—'}</td>
+                  <td className="px-2 sm:px-3 py-2 font-mono text-green-400 hidden md:table-cell">{te.epa.breakdown?.auto_points?.toFixed(1) ?? '—'}</td>
+                  <td className="px-2 sm:px-3 py-2 font-mono text-purple-400 hidden md:table-cell">{te.epa.breakdown?.teleop_points?.toFixed(1) ?? '—'}</td>
+                  <td className="px-2 sm:px-3 py-2 font-mono text-orange-400 hidden md:table-cell">{te.epa.breakdown?.endgame_points?.toFixed(1) ?? '—'}</td>
                 </tr>
               );
             })}

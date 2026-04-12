@@ -20,9 +20,9 @@ export function EPABreakdownChart({ teamEvents }: { teamEvents: StatboticsTeamEv
     const bd = te.epa.breakdown || {};
     return {
       name: `${te.team}`,
-      Auto: bd.auto_points?.mean ?? 0,
-      Teleop: bd.teleop_points?.mean ?? 0,
-      Endgame: bd.endgame_points?.mean ?? 0,
+      Auto: bd.auto_points ?? 0,
+      Teleop: bd.teleop_points ?? 0,
+      Endgame: bd.endgame_points ?? 0,
     };
   }).sort((a, b) => (b.Auto + b.Teleop + b.Endgame) - (a.Auto + a.Teleop + a.Endgame))
     .slice(0, 15);
@@ -182,13 +182,13 @@ export function TeamComparisonRadar({ teamEvents }: { teamEvents: StatboticsTeam
   // Normalize values for radar
   const maxVals: Record<string, number> = {};
   metrics.forEach(m => {
-    maxVals[m] = Math.max(...teamEvents.map(te => te.epa.breakdown?.[m]?.mean ?? 0), 1);
+    maxVals[m] = Math.max(...teamEvents.map(te => te.epa.breakdown?.[m] ?? 0), 1);
   });
 
   const data = metrics.map(m => {
     const entry: Record<string, string | number> = { metric: metricLabels[m] };
     teamEvents.forEach(te => {
-      entry[`Team ${te.team}`] = ((te.epa.breakdown?.[m]?.mean ?? 0) / maxVals[m] * 100);
+      entry[`Team ${te.team}`] = ((te.epa.breakdown?.[m] ?? 0) / maxVals[m] * 100);
     });
     return entry;
   });

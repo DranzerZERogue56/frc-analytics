@@ -51,7 +51,7 @@ export interface EPABreakdown {
   unitless: number;
   norm: number;
   conf: [number, number];
-  breakdown: Record<string, { mean: number; sd: number }>;
+  breakdown: Record<string, number>;
   stats: {
     start: number;
     pre_elim: number;
