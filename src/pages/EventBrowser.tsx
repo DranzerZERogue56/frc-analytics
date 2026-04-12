@@ -6,7 +6,7 @@ import { useDebounce } from '../hooks/useDebounce';
 import { FilterBar } from '../components/FilterBar';
 import { EventCard } from '../components/EventCard';
 import { LoadingSpinner, ErrorMessage } from '../components/LoadingSpinner';
-const YEAR = 2025;
+const YEAR = 2026;
 
 export function EventBrowser() {
   const { filters, setFilter } = useEventFilters();
