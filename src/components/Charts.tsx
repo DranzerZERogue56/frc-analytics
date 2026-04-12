@@ -88,7 +88,7 @@ export function EPAScatterChart({ teamEvents }: { teamEvents: StatboticsTeamEven
           <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
           <XAxis dataKey="epa" name="EPA" stroke="#94a3b8" fontSize={11} label={{ value: 'EPA', position: 'bottom', fill: '#94a3b8', fontSize: 11 }} />
           <YAxis dataKey="winrate" name="Win%" stroke="#94a3b8" fontSize={11} label={{ value: 'Win%', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 11 }} />
-          <Tooltip {...tooltipStyle} formatter={(val: number) => val.toFixed(1)} />
+          <Tooltip {...tooltipStyle} formatter={(val) => typeof val === 'number' ? val.toFixed(1) : String(val)} />
           <Scatter data={data} fill="#3b82f6" />
         </ScatterChart>
       </ResponsiveContainer>
@@ -249,7 +249,7 @@ export function TopTeamsChart({ teamEvents, metric, title }: {
           <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
           <XAxis type="number" stroke="#94a3b8" fontSize={11} />
           <YAxis type="category" dataKey="name" stroke="#94a3b8" fontSize={11} width={50} />
-          <Tooltip {...tooltipStyle} formatter={(val: number) => val.toFixed(1)} />
+          <Tooltip {...tooltipStyle} formatter={(val) => typeof val === 'number' ? val.toFixed(1) : String(val)} />
           <Bar dataKey="value" fill="#f59e0b" radius={[0, 4, 4, 0]} />
         </BarChart>
       </ResponsiveContainer>

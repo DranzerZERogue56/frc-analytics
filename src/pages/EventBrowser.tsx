@@ -6,8 +6,6 @@ import { useDebounce } from '../hooks/useDebounce';
 import { FilterBar } from '../components/FilterBar';
 import { EventCard } from '../components/EventCard';
 import { LoadingSpinner, ErrorMessage } from '../components/LoadingSpinner';
-import type { StatboticsEvent } from '../types';
-
 const YEAR = 2025;
 
 export function EventBrowser() {

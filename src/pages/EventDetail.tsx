@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getEvent, getTeamEvents, getMatches, getTeamMatches } from '../api/statbotics';
+import { getEvent, getTeamEvents, getMatches } from '../api/statbotics';
 import { formatDate, getEventTypeLabel, getStatusBadgeClasses } from '../utils/helpers';
 import { TeamTable } from '../components/TeamTable';
 import { MatchList } from '../components/MatchList';
