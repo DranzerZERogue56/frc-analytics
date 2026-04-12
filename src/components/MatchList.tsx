@@ -9,15 +9,68 @@ export function MatchList({ matches, highlightTeam }: { matches: StatboticsMatch
       {quals.length > 0 && (
         <div>
           <h3 className="text-sm font-semibold text-[var(--color-text-muted)] uppercase mb-3">Qualification Matches ({quals.length})</h3>
-          <MatchTable matches={quals} highlightTeam={highlightTeam} />
+          {/* Desktop table */}
+          <div className="hidden sm:block">
+            <MatchTable matches={quals} highlightTeam={highlightTeam} />
+          </div>
+          {/* Mobile cards */}
+          <div className="sm:hidden space-y-2">
+            {quals.map(m => <MatchCard key={m.key} match={m} highlightTeam={highlightTeam} />)}
+          </div>
         </div>
       )}
       {elims.length > 0 && (
         <div>
           <h3 className="text-sm font-semibold text-[var(--color-text-muted)] uppercase mb-3">Elimination Matches ({elims.length})</h3>
-          <MatchTable matches={elims} highlightTeam={highlightTeam} />
+          <div className="hidden sm:block">
+            <MatchTable matches={elims} highlightTeam={highlightTeam} />
+          </div>
+          <div className="sm:hidden space-y-2">
+            {elims.map(m => <MatchCard key={m.key} match={m} highlightTeam={highlightTeam} />)}
+          </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function MatchCard({ match: m, highlightTeam }: { match: StatboticsMatch; highlightTeam?: number }) {
+  const played = m.status === 'Completed';
+  const redWon = m.result?.winner === 'red';
+  const blueWon = m.result?.winner === 'blue';
+
+  return (
+    <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-3">
+      <div className="flex justify-between items-center mb-2">
+        <span className="text-xs text-[var(--color-text-muted)] font-medium">{m.match_name}</span>
+        {played && (
+          <span className="text-xs text-[var(--color-text-muted)]">
+            {m.pred ? `Pred: ${(m.pred.red_win_prob * 100).toFixed(0)}%R` : ''}
+          </span>
+        )}
+      </div>
+      {/* Red alliance */}
+      <div className={`flex justify-between items-center py-1.5 px-2 rounded mb-1 ${redWon ? 'bg-red-900/30' : ''}`}>
+        <div className="flex gap-2">
+          {m.alliances.red.team_keys.map(t => (
+            <span key={t} className={`text-xs font-mono ${highlightTeam === t ? 'text-white font-bold' : 'text-red-400'}`}>{t}</span>
+          ))}
+        </div>
+        <span className={`text-sm font-mono ${redWon ? 'text-red-400 font-bold' : 'text-red-400/60'}`}>
+          {played ? m.result.red_score : '—'}
+        </span>
+      </div>
+      {/* Blue alliance */}
+      <div className={`flex justify-between items-center py-1.5 px-2 rounded ${blueWon ? 'bg-blue-900/30' : ''}`}>
+        <div className="flex gap-2">
+          {m.alliances.blue.team_keys.map(t => (
+            <span key={t} className={`text-xs font-mono ${highlightTeam === t ? 'text-white font-bold' : 'text-blue-400'}`}>{t}</span>
+          ))}
+        </div>
+        <span className={`text-sm font-mono ${blueWon ? 'text-blue-400 font-bold' : 'text-blue-400/60'}`}>
+          {played ? m.result.blue_score : '—'}
+        </span>
+      </div>
     </div>
   );
 }

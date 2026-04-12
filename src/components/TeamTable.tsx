@@ -45,9 +45,9 @@ export function TeamTable({ teamEvents, selectedTeams, onToggleTeam }: TeamTable
     else { setSortKey(key); setSortAsc(key === 'rank' || key === 'team'); }
   };
 
-  const SortHeader = ({ k, children }: { k: SortKey; children: React.ReactNode }) => (
+  const SortHeader = ({ k, children, className = '' }: { k: SortKey; children: React.ReactNode; className?: string }) => (
     <th
-      className="px-3 py-2 text-left text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider cursor-pointer hover:text-white select-none"
+      className={`px-2 sm:px-3 py-2 text-left text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider cursor-pointer hover:text-white select-none whitespace-nowrap ${className}`}
       onClick={() => handleSort(k)}
     >
       {children} {sortKey === k && (sortAsc ? '▲' : '▼')}
@@ -56,34 +56,110 @@ export function TeamTable({ teamEvents, selectedTeams, onToggleTeam }: TeamTable
 
   return (
     <div>
-      <div className="mb-4">
+      {/* Search bar */}
+      <div className="mb-4 space-y-2">
         <input
           type="text"
           placeholder="Search teams by number or name..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full max-w-md bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500 placeholder:text-[var(--color-text-muted)]"
+          className="w-full bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] rounded-md px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 placeholder:text-[var(--color-text-muted)]"
         />
-        <span className="text-xs text-[var(--color-text-muted)] ml-2">{filtered.length} teams</span>
-        {selectedTeams.length > 0 && (
-          <span className="text-xs text-blue-400 ml-3">{selectedTeams.length} selected for comparison</span>
-        )}
+        <div className="flex gap-3 text-xs text-[var(--color-text-muted)]">
+          <span>{filtered.length} teams</span>
+          {selectedTeams.length > 0 && (
+            <span className="text-blue-400">{selectedTeams.length} selected for comparison</span>
+          )}
+        </div>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-[var(--color-border)]">
+      {/* Mobile card view */}
+      <div className="sm:hidden space-y-2">
+        {/* Mobile sort control */}
+        <div className="flex gap-2 mb-3">
+          <select
+            value={sortKey}
+            onChange={e => setSortKey(e.target.value as SortKey)}
+            className="bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] rounded-md px-2 py-1.5 text-xs flex-1"
+          >
+            <option value="epa">Sort: EPA</option>
+            <option value="rank">Sort: Rank</option>
+            <option value="team">Sort: Team #</option>
+            <option value="winrate">Sort: Win%</option>
+            <option value="auto">Sort: Auto</option>
+            <option value="teleop">Sort: Teleop</option>
+            <option value="endgame">Sort: Endgame</option>
+          </select>
+          <button
+            onClick={() => setSortAsc(!sortAsc)}
+            className="bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] rounded-md px-3 py-1.5 text-xs cursor-pointer"
+          >
+            {sortAsc ? '▲ Asc' : '▼ Desc'}
+          </button>
+        </div>
+
+        {filtered.map(te => {
+          const isSelected = selectedTeams.includes(te.team);
+          return (
+            <div
+              key={te.team}
+              className={`bg-[var(--color-bg)] border rounded-lg p-3 cursor-pointer active:scale-[0.98] transition-transform ${isSelected ? 'border-blue-500 bg-blue-900/20' : 'border-[var(--color-border)]'}`}
+              onClick={() => onToggleTeam(te.team)}
+            >
+              <div className="flex justify-between items-start mb-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <input type="checkbox" checked={isSelected} readOnly className="accent-blue-500 shrink-0" />
+                  <span className="text-blue-400 font-bold text-base">{te.team}</span>
+                  <span className="text-white text-sm truncate">{te.team_name}</span>
+                </div>
+                <span className="text-[var(--color-text-muted)] text-xs shrink-0 ml-2">#{te.record.qual.rank || '—'}</span>
+              </div>
+              <div className="grid grid-cols-3 gap-x-3 gap-y-1 text-xs">
+                <div>
+                  <span className="text-[var(--color-text-muted)]">EPA </span>
+                  <span className="text-yellow-400 font-mono font-bold">{te.epa.total_points.mean.toFixed(1)}</span>
+                </div>
+                <div>
+                  <span className="text-[var(--color-text-muted)]">Win </span>
+                  <span className="font-mono">{(te.record.total.winrate * 100).toFixed(0)}%</span>
+                </div>
+                <div>
+                  <span className="text-[var(--color-text-muted)]">Rec </span>
+                  <span className="text-[var(--color-text-muted)]">{te.record.total.wins}-{te.record.total.losses}-{te.record.total.ties}</span>
+                </div>
+                <div>
+                  <span className="text-[var(--color-text-muted)]">Auto </span>
+                  <span className="text-green-400 font-mono">{te.epa.breakdown?.auto_points?.mean?.toFixed(1) ?? '—'}</span>
+                </div>
+                <div>
+                  <span className="text-[var(--color-text-muted)]">Tele </span>
+                  <span className="text-purple-400 font-mono">{te.epa.breakdown?.teleop_points?.mean?.toFixed(1) ?? '—'}</span>
+                </div>
+                <div>
+                  <span className="text-[var(--color-text-muted)]">End </span>
+                  <span className="text-orange-400 font-mono">{te.epa.breakdown?.endgame_points?.mean?.toFixed(1) ?? '—'}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Desktop table view */}
+      <div className="hidden sm:block overflow-x-auto rounded-lg border border-[var(--color-border)]">
         <table className="w-full text-sm">
           <thead className="bg-[var(--color-surface)]">
             <tr>
-              <th className="px-3 py-2 w-8"></th>
+              <th className="px-2 sm:px-3 py-2 w-8"></th>
               <SortHeader k="rank">Rank</SortHeader>
               <SortHeader k="team">Team</SortHeader>
-              <th className="px-3 py-2 text-left text-xs font-medium text-[var(--color-text-muted)] uppercase">Name</th>
+              <th className="px-2 sm:px-3 py-2 text-left text-xs font-medium text-[var(--color-text-muted)] uppercase">Name</th>
               <SortHeader k="epa">EPA</SortHeader>
               <SortHeader k="winrate">Win%</SortHeader>
-              <th className="px-3 py-2 text-left text-xs font-medium text-[var(--color-text-muted)] uppercase">Record</th>
-              <SortHeader k="auto">Auto</SortHeader>
-              <SortHeader k="teleop">Teleop</SortHeader>
-              <SortHeader k="endgame">Endgame</SortHeader>
+              <th className="px-2 sm:px-3 py-2 text-left text-xs font-medium text-[var(--color-text-muted)] uppercase hidden lg:table-cell">Record</th>
+              <SortHeader k="auto" className="hidden md:table-cell">Auto</SortHeader>
+              <SortHeader k="teleop" className="hidden md:table-cell">Teleop</SortHeader>
+              <SortHeader k="endgame" className="hidden md:table-cell">Endgame</SortHeader>
             </tr>
           </thead>
           <tbody className="divide-y divide-[var(--color-border)]">
@@ -95,25 +171,20 @@ export function TeamTable({ teamEvents, selectedTeams, onToggleTeam }: TeamTable
                   className={`hover:bg-[var(--color-surface-hover)] cursor-pointer transition-colors ${isSelected ? 'bg-blue-900/20' : ''}`}
                   onClick={() => onToggleTeam(te.team)}
                 >
-                  <td className="px-3 py-2">
-                    <input
-                      type="checkbox"
-                      checked={isSelected}
-                      readOnly
-                      className="rounded border-gray-600 accent-blue-500"
-                    />
+                  <td className="px-2 sm:px-3 py-2">
+                    <input type="checkbox" checked={isSelected} readOnly className="rounded border-gray-600 accent-blue-500" />
                   </td>
-                  <td className="px-3 py-2 text-[var(--color-text-muted)]">{te.record.qual.rank || '—'}</td>
-                  <td className="px-3 py-2 font-bold text-blue-400">{te.team}</td>
-                  <td className="px-3 py-2 text-white max-w-[200px] truncate">{te.team_name}</td>
-                  <td className="px-3 py-2 font-mono text-yellow-400">{te.epa.total_points.mean.toFixed(1)}</td>
-                  <td className="px-3 py-2 font-mono">{(te.record.total.winrate * 100).toFixed(0)}%</td>
-                  <td className="px-3 py-2 text-[var(--color-text-muted)]">
+                  <td className="px-2 sm:px-3 py-2 text-[var(--color-text-muted)]">{te.record.qual.rank || '—'}</td>
+                  <td className="px-2 sm:px-3 py-2 font-bold text-blue-400">{te.team}</td>
+                  <td className="px-2 sm:px-3 py-2 text-white max-w-[200px] truncate">{te.team_name}</td>
+                  <td className="px-2 sm:px-3 py-2 font-mono text-yellow-400">{te.epa.total_points.mean.toFixed(1)}</td>
+                  <td className="px-2 sm:px-3 py-2 font-mono">{(te.record.total.winrate * 100).toFixed(0)}%</td>
+                  <td className="px-2 sm:px-3 py-2 text-[var(--color-text-muted)] hidden lg:table-cell">
                     {te.record.total.wins}-{te.record.total.losses}-{te.record.total.ties}
                   </td>
-                  <td className="px-3 py-2 font-mono text-green-400">{te.epa.breakdown?.auto_points?.mean?.toFixed(1) ?? '—'}</td>
-                  <td className="px-3 py-2 font-mono text-purple-400">{te.epa.breakdown?.teleop_points?.mean?.toFixed(1) ?? '—'}</td>
-                  <td className="px-3 py-2 font-mono text-orange-400">{te.epa.breakdown?.endgame_points?.mean?.toFixed(1) ?? '—'}</td>
+                  <td className="px-2 sm:px-3 py-2 font-mono text-green-400 hidden md:table-cell">{te.epa.breakdown?.auto_points?.mean?.toFixed(1) ?? '—'}</td>
+                  <td className="px-2 sm:px-3 py-2 font-mono text-purple-400 hidden md:table-cell">{te.epa.breakdown?.teleop_points?.mean?.toFixed(1) ?? '—'}</td>
+                  <td className="px-2 sm:px-3 py-2 font-mono text-orange-400 hidden md:table-cell">{te.epa.breakdown?.endgame_points?.mean?.toFixed(1) ?? '—'}</td>
                 </tr>
               );
             })}

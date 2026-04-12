@@ -6,6 +6,7 @@ import { useDebounce } from '../hooks/useDebounce';
 import { FilterBar } from '../components/FilterBar';
 import { EventCard } from '../components/EventCard';
 import { LoadingSpinner, ErrorMessage } from '../components/LoadingSpinner';
+
 const YEAR = 2026;
 
 export function EventBrowser() {
@@ -74,9 +75,9 @@ export function EventBrowser() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white mb-2">FRC {YEAR} Events</h1>
-        <div className="flex gap-4 text-sm text-[var(--color-text-muted)]">
+      <div className="mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">FRC {YEAR} Events</h1>
+        <div className="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm text-[var(--color-text-muted)]">
           <span>{statusCounts.total} total</span>
           {statusCounts.ongoing > 0 && <span className="text-green-400">{statusCounts.ongoing} live</span>}
           <span className="text-yellow-400">{statusCounts.upcoming} upcoming</span>
@@ -86,17 +87,17 @@ export function EventBrowser() {
 
       <FilterBar filters={filters} setFilter={setFilter} weeks={weeks} districts={districts} />
 
-      <p className="text-sm text-[var(--color-text-muted)] mb-4">{filtered.length} events shown</p>
+      <p className="text-xs sm:text-sm text-[var(--color-text-muted)] mb-3 sm:mb-4">{filtered.length} events shown</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {filtered.map(event => (
           <EventCard key={event.key} event={event} />
         ))}
       </div>
 
       {filtered.length === 0 && (
-        <div className="text-center py-16 text-[var(--color-text-muted)]">
-          <p className="text-lg mb-2">No events match your filters</p>
+        <div className="text-center py-12 sm:py-16 text-[var(--color-text-muted)]">
+          <p className="text-base sm:text-lg mb-2">No events match your filters</p>
           <p className="text-sm">Try adjusting your search criteria</p>
         </div>
       )}

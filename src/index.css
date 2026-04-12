@@ -39,3 +39,18 @@ body {
   background: var(--color-border);
   border-radius: 4px;
 }
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Touch-friendly tap targets */
+@media (max-width: 640px) {
+  select, input, button {
+    min-height: 44px;
+  }
+}
