@@ -20,7 +20,7 @@ export function getEventTypeLabel(type: string): string {
 export function getStatusColor(status: string): string {
   switch (status) {
     case 'Ongoing': return 'text-green-400';
-    case 'Upcoming': return 'text-yellow-400';
+    case 'Upcoming': return 'text-orange-400';
     case 'Completed': return 'text-gray-400';
     default: return 'text-gray-400';
   }
@@ -29,7 +29,7 @@ export function getStatusColor(status: string): string {
 export function getStatusBadgeClasses(status: string): string {
   switch (status) {
     case 'Ongoing': return 'bg-green-900/50 text-green-300 border-green-700';
-    case 'Upcoming': return 'bg-yellow-900/50 text-yellow-300 border-yellow-700';
+    case 'Upcoming': return 'bg-orange-900/50 text-orange-300 border-orange-700';
     case 'Completed': return 'bg-gray-800/50 text-gray-400 border-gray-600';
     default: return 'bg-gray-800/50 text-gray-400 border-gray-600';
   }

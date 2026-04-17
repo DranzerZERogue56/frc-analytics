@@ -80,7 +80,7 @@ export function EventBrowser() {
         <div className="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm text-[var(--color-text-muted)]">
           <span>{statusCounts.total} total</span>
           {statusCounts.ongoing > 0 && <span className="text-green-400">{statusCounts.ongoing} live</span>}
-          <span className="text-yellow-400">{statusCounts.upcoming} upcoming</span>
+          <span className="text-orange-400">{statusCounts.upcoming} upcoming</span>
           <span>{statusCounts.completed} completed</span>
         </div>
       </div>
