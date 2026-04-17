@@ -17,6 +17,26 @@
   --color-blue-alliance: #2563eb;
 }
 
+/* ─── Pink Mode ("I'm Just a Girl") ─── */
+/* Palette: coolors.co/palette/ff0a54-ff477e-ff5c8a-ff7096-ff85a1-ff99ac-fbb1bd-f9bec7-f7cad0-fae0e4 */
+html.pink-mode,
+html.pink-mode *  {
+  --color-primary: #ff0a54;
+  --color-primary-light: #ff477e;
+  --color-accent: #ff5c8a;
+  --color-bg: #f9bec7;
+  --color-surface: #fbb1bd;
+  --color-surface-hover: #ff99ac;
+  --color-text: #3d1228;
+  --color-text-muted: #5c2040;
+  --color-border: #ff85a1;
+  --color-success: #ff0a54;
+  --color-warning: #ff7096;
+  --color-danger: #ff477e;
+  --color-red-alliance: #ff0a54;
+  --color-blue-alliance: #ff477e;
+}
+
 body {
   margin: 0;
   background: var(--color-bg);

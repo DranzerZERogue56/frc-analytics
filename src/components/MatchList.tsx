@@ -53,7 +53,7 @@ function MatchCard({ match: m, highlightTeam }: { match: StatboticsMatch; highli
       <div className={`flex justify-between items-center py-1.5 px-2 rounded mb-1 ${redWon ? 'bg-red-900/30' : ''}`}>
         <div className="flex gap-2">
           {m.alliances.red.team_keys.map(t => (
-            <span key={t} className={`text-xs font-mono ${highlightTeam === t ? 'text-white font-bold' : 'text-red-400'}`}>{t}</span>
+            <span key={t} className={`text-xs font-mono ${highlightTeam === t ? 'text-[var(--color-text)] font-bold' : 'text-red-400'}`}>{t}</span>
           ))}
         </div>
         <span className={`text-sm font-mono ${redWon ? 'text-red-400 font-bold' : 'text-red-400/60'}`}>
@@ -64,7 +64,7 @@ function MatchCard({ match: m, highlightTeam }: { match: StatboticsMatch; highli
       <div className={`flex justify-between items-center py-1.5 px-2 rounded ${blueWon ? 'bg-blue-900/30' : ''}`}>
         <div className="flex gap-2">
           {m.alliances.blue.team_keys.map(t => (
-            <span key={t} className={`text-xs font-mono ${highlightTeam === t ? 'text-white font-bold' : 'text-blue-400'}`}>{t}</span>
+            <span key={t} className={`text-xs font-mono ${highlightTeam === t ? 'text-[var(--color-text)] font-bold' : 'text-blue-400'}`}>{t}</span>
           ))}
         </div>
         <span className={`text-sm font-mono ${blueWon ? 'text-blue-400 font-bold' : 'text-blue-400/60'}`}>
@@ -99,7 +99,7 @@ function MatchTable({ matches, highlightTeam }: { matches: StatboticsMatch[]; hi
                 <td className="px-3 py-2">
                   <div className="flex gap-1.5">
                     {m.alliances.red.team_keys.map(t => (
-                      <span key={t} className={`text-xs px-1.5 py-0.5 rounded ${highlightTeam === t ? 'bg-red-700 text-white font-bold' : 'text-red-300'}`}>
+                      <span key={t} className={`text-xs px-1.5 py-0.5 rounded ${highlightTeam === t ? 'bg-red-700 text-[var(--color-text)] font-bold' : 'text-red-300'}`}>
                         {t}
                       </span>
                     ))}
@@ -119,7 +119,7 @@ function MatchTable({ matches, highlightTeam }: { matches: StatboticsMatch[]; hi
                 <td className="px-3 py-2">
                   <div className="flex gap-1.5">
                     {m.alliances.blue.team_keys.map(t => (
-                      <span key={t} className={`text-xs px-1.5 py-0.5 rounded ${highlightTeam === t ? 'bg-blue-700 text-white font-bold' : 'text-blue-300'}`}>
+                      <span key={t} className={`text-xs px-1.5 py-0.5 rounded ${highlightTeam === t ? 'bg-blue-700 text-[var(--color-text)] font-bold' : 'text-blue-300'}`}>
                         {t}
                       </span>
                     ))}

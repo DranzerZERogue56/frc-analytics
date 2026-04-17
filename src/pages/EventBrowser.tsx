@@ -10,7 +10,7 @@ import { LoadingSpinner, ErrorMessage } from '../components/LoadingSpinner';
 const YEAR = 2026;
 
 export function EventBrowser() {
-  const { filters, setFilter } = useEventFilters();
+  const { filters, setFilter, applyFilters } = useEventFilters();
   const debouncedSearch = useDebounce(filters.search, 150);
 
   const { data: events, isLoading, error } = useQuery({
@@ -76,7 +76,7 @@ export function EventBrowser() {
   return (
     <div>
       <div className="mb-4 sm:mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">FRC {YEAR} Events</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-[var(--color-text)] mb-1 sm:mb-2">FRC {YEAR} Events</h1>
         <div className="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm text-[var(--color-text-muted)]">
           <span>{statusCounts.total} total</span>
           {statusCounts.ongoing > 0 && <span className="text-green-400">{statusCounts.ongoing} live</span>}
@@ -85,7 +85,7 @@ export function EventBrowser() {
         </div>
       </div>
 
-      <FilterBar filters={filters} setFilter={setFilter} weeks={weeks} districts={districts} />
+      <FilterBar filters={filters} setFilter={setFilter} applyFilters={applyFilters} weeks={weeks} districts={districts} />
 
       <p className="text-xs sm:text-sm text-[var(--color-text-muted)] mb-3 sm:mb-4">{filtered.length} events shown</p>
 

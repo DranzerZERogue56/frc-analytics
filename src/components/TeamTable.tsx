@@ -47,7 +47,7 @@ export function TeamTable({ teamEvents, selectedTeams, onToggleTeam }: TeamTable
 
   const SortHeader = ({ k, children, className = '' }: { k: SortKey; children: React.ReactNode; className?: string }) => (
     <th
-      className={`px-2 sm:px-3 py-2 text-left text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider cursor-pointer hover:text-white select-none whitespace-nowrap ${className}`}
+      className={`px-2 sm:px-3 py-2 text-left text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider cursor-pointer hover:text-[var(--color-text)] select-none whitespace-nowrap ${className}`}
       onClick={() => handleSort(k)}
     >
       {children} {sortKey === k && (sortAsc ? '▲' : '▼')}
@@ -110,14 +110,14 @@ export function TeamTable({ teamEvents, selectedTeams, onToggleTeam }: TeamTable
                 <div className="flex items-center gap-2 min-w-0">
                   <input type="checkbox" checked={isSelected} readOnly className="accent-blue-500 shrink-0" />
                   <span className="text-blue-400 font-bold text-base">{te.team}</span>
-                  <span className="text-white text-sm truncate">{te.team_name}</span>
+                  <span className="text-[var(--color-text)] text-sm truncate">{te.team_name}</span>
                 </div>
                 <span className="text-[var(--color-text-muted)] text-xs shrink-0 ml-2">#{te.record.qual.rank || '—'}</span>
               </div>
               <div className="grid grid-cols-3 gap-x-3 gap-y-1 text-xs">
                 <div>
                   <span className="text-[var(--color-text-muted)]">EPA </span>
-                  <span className="text-yellow-400 font-mono font-bold">{te.epa.total_points.mean.toFixed(1)}</span>
+                  <span className="text-orange-500 font-mono font-bold">{te.epa.total_points.mean.toFixed(1)}</span>
                 </div>
                 <div>
                   <span className="text-[var(--color-text-muted)]">Win </span>
@@ -176,8 +176,8 @@ export function TeamTable({ teamEvents, selectedTeams, onToggleTeam }: TeamTable
                   </td>
                   <td className="px-2 sm:px-3 py-2 text-[var(--color-text-muted)]">{te.record.qual.rank || '—'}</td>
                   <td className="px-2 sm:px-3 py-2 font-bold text-blue-400">{te.team}</td>
-                  <td className="px-2 sm:px-3 py-2 text-white max-w-[200px] truncate">{te.team_name}</td>
-                  <td className="px-2 sm:px-3 py-2 font-mono text-yellow-400">{te.epa.total_points.mean.toFixed(1)}</td>
+                  <td className="px-2 sm:px-3 py-2 text-[var(--color-text)] max-w-[200px] truncate">{te.team_name}</td>
+                  <td className="px-2 sm:px-3 py-2 font-mono text-orange-500">{te.epa.total_points.mean.toFixed(1)}</td>
                   <td className="px-2 sm:px-3 py-2 font-mono">{(te.record.total.winrate * 100).toFixed(0)}%</td>
                   <td className="px-2 sm:px-3 py-2 text-[var(--color-text-muted)] hidden lg:table-cell">
                     {te.record.total.wins}-{te.record.total.losses}-{te.record.total.ties}

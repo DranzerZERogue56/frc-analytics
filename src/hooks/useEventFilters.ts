@@ -25,5 +25,17 @@ export function useEventFilters() {
     });
   };
 
-  return { filters, setFilter };
+  const applyFilters = (newFilters: EventFilters) => {
+    setSearchParams(() => {
+      const next = new URLSearchParams();
+      if (newFilters.status !== 'all') next.set('status', newFilters.status);
+      if (newFilters.type !== 'all') next.set('type', newFilters.type);
+      if (newFilters.week !== 'all') next.set('week', newFilters.week);
+      if (newFilters.district !== 'all') next.set('district', newFilters.district);
+      if (newFilters.search) next.set('q', newFilters.search);
+      return next;
+    });
+  };
+
+  return { filters, setFilter, applyFilters };
 }
