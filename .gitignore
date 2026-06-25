@@ -23,3 +23,41 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# --- claude-managed-ignore ---
+# Dependencies
+node_modules/
+.pnp/
+.yarn/
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+# Builds / caches
+dist/
+build/
+.next/
+out/
+.expo/
+.cache/
+.parcel-cache/
+.gradle/
+target/
+*.class
+# Godot
+.godot/
+.import/
+# Secrets / env
+.env
+.env.*
+!.env.example
+*.pem
+*credentials*.json
+serviceAccount*.json
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
